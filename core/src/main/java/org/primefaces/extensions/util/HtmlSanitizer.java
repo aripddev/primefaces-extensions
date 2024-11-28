@@ -33,7 +33,7 @@ public class HtmlSanitizer {
     private static final PolicyFactory HTML_IMAGES_SANITIZER = new HtmlPolicyBuilder()
                 .allowUrlProtocols("data", "http", "https")
                 .allowElements("img")
-                .allowAttributes("src")
+                .allowAttributes("id", "src")
                 .matching(Pattern.compile("^(data:image/(gif|png|jpeg|webp|svg)[,;]|http|https|mailto|//).+", Pattern.CASE_INSENSITIVE))
                 .onElements("img")
                 .allowAttributes(
@@ -54,7 +54,8 @@ public class HtmlSanitizer {
     private static final PolicyFactory HTML_MEDIA_SANITIZER = new HtmlPolicyBuilder()
                 .allowUrlProtocols("data", "http", "https")
                 .allowElements("video", "audio", "source", "iframe", "figure")
-                .allowAttributes("controls", "width", "height", "origin-size", "src", "allowfullscreen", "class", "style", "data-proportion", "data-align",
+                .allowAttributes("id", "controls", "width", "height", "origin-size", "src", "allowfullscreen", "class", "style", "data-proportion",
+                            "data-align",
                             "data-percentage", " data-size", "data-file-name", "data-file-size", "data-origin", "data-rotate", "data-index")
                 .onElements("video", "audio", "source", "iframe", "figure")
                 .toFactory();
@@ -62,14 +63,14 @@ public class HtmlSanitizer {
     private static final PolicyFactory HTML_LINKS_SANITIZER = Sanitizers.LINKS
                 .and(new HtmlPolicyBuilder()
                             .allowElements("a")
-                            .allowAttributes("target")
+                            .allowAttributes("id", "target")
                             .onElements("a")
                             .toFactory());
 
     private static final PolicyFactory HTML_STYLES_SANITIZER = Sanitizers.STYLES
                 .and(new HtmlPolicyBuilder()
                             .allowElements("table", "span", "li", "p", "pre", "div", "hr")
-                            .allowAttributes("class", "style", "contenteditable")
+                            .allowAttributes("id", "class", "style", "contenteditable")
                             .onElements("table", "span", "li", "p", "pre", "div", "hr")
                             .toFactory());
 
@@ -79,7 +80,7 @@ public class HtmlSanitizer {
 
     }
 
-    public static String sanitizeHtml(String value,
+    public static PolicyFactory creatPolicyFactory(
                 boolean allowBlocks,
                 boolean allowFormatting,
                 boolean allowLinks,
@@ -87,11 +88,6 @@ public class HtmlSanitizer {
                 boolean allowImages,
                 boolean allowTables,
                 boolean allowMedia) {
-
-        if (LangUtils.isBlank(value)) {
-            return value;
-        }
-
         PolicyFactory sanitizer = HTML_DENY_ALL_SANITIZER;
         if (allowBlocks) {
             sanitizer = sanitizer.and(Sanitizers.BLOCKS);
@@ -114,6 +110,23 @@ public class HtmlSanitizer {
         if (allowTables) {
             sanitizer = sanitizer.and(Sanitizers.TABLES);
         }
+        return sanitizer;
+    }
+
+    public static String sanitizeHtml(String value,
+                boolean allowBlocks,
+                boolean allowFormatting,
+                boolean allowLinks,
+                boolean allowStyles,
+                boolean allowImages,
+                boolean allowTables,
+                boolean allowMedia) {
+
+        if (LangUtils.isBlank(value)) {
+            return value;
+        }
+
+        PolicyFactory sanitizer = creatPolicyFactory(allowBlocks, allowFormatting, allowLinks, allowStyles, allowImages, allowTables, allowMedia);
 
         return sanitizer.sanitize(value);
     }

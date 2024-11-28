@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions-parent</artifactId>
-    <version>14.0.7-SNAPSHOT</version>
+    <version>14.0.8</version>
     <packaging>pom</packaging>
     <name>PrimeFaces Extensions Parent</name>
     <description>
@@ -105,14 +105,14 @@
         <commonmark.version>0.24.0</commonmark.version>
         <commons-collections.version>4.4</commons-collections.version>
         <commons-fileupload.version>1.5</commons-fileupload.version>
-        <commons-io.version>2.17.0</commons-io.version>
+        <commons-io.version>2.18.0</commons-io.version>
         <commons-lang3.version>3.17.0</commons-lang3.version>
         <gson.version>2.11.0</gson.version>
         <jakarta-faces.version>2.3.21</jakarta-faces.version>
-        <libphonenumber.version>8.13.49</libphonenumber.version>
+        <libphonenumber.version>8.13.50</libphonenumber.version>
         <morphia.version>2.4.14</morphia.version>
         <junit.version>5.11.3</junit.version>
-        <primefaces.core.version>14.0.6</primefaces.core.version>
+        <primefaces.core.version>14.0.8</primefaces.core.version>
         <primefaces.optimizer.version>2.6.5</primefaces.optimizer.version>
         <withoutCompress>true</withoutCompress>
     </properties>
@@ -317,7 +317,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.10.1</version>
+                    <version>3.11.1</version>
                     <configuration>
                         <source>${maven.compiler.source}</source>
                         <detectJavaApiLink>false</detectJavaApiLink>
@@ -361,7 +361,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.5.1</version>
+                    <version>3.5.2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.felix</groupId>
@@ -432,7 +432,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>10.20.0</version>
+                            <version>10.20.1</version>
                         </dependency>
                     </dependencies>
                 </plugin>
